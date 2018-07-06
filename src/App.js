@@ -38,8 +38,9 @@ class App extends Component {
 
   togglePersonsHandler = (event) => {
     console.log('toggle persons');
+    let show = this.state.showPersons;
     this.setState( {
-      showPersons : !this.state.showPersons
+      showPersons : !show
     });
   }
   render() {

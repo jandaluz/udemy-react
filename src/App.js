@@ -12,6 +12,7 @@ class App extends Component {
     showPersons:false
   }
 
+  /** DEPRECATED
   switchNameHandler = (newName) => {
     console.log('Was clicked');
     this.setState( {
@@ -21,6 +22,14 @@ class App extends Component {
         {name:"Raymond", age:40}
       ]      
     })
+  }
+  */
+
+  deletePersonHandler = (personIndex) => {
+    console.log('delete: ' + personIndex);
+    const persons = this.state.persons;
+    persons.splice(personIndex, 1);
+    this.setState({persons:persons});
   }
 
   nameChangedHandler = (event) => {
@@ -56,11 +65,12 @@ class App extends Component {
     if(this.state.showPersons) {
       persons = (
         <div>
-          {this.state.persons.map((person) => {
+          {this.state.persons.map((person, index) => {
             return (
               <Person
                 name={person.name}
-                age={person.age} />
+                age={person.age} 
+                click={() => this.deletePersonHandler(index)} />
             );
           })}
         </div> 

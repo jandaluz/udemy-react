@@ -32,16 +32,25 @@ class App extends Component {
     this.setState({persons:persons});
   }
 
-  nameChangedHandler = (event) => {
+  nameChangedHandler = (event, id) => {
     console.log('changed');
-    console.log(event.target.value);
     const newName = event.target.value;
+
+    const personIndex = this.state.persons.findIndex( p => {
+      return p.id === id;
+    });
+    const _person = {
+      ...this.state.persons[personIndex],
+      name:newName
+    };
+
+    const _persons = [
+      ...this.state.persons
+    ]
+    _persons[personIndex] = _person;
+
     this.setState( {
-      persons:[
-        {name: "Jamison", age:28},
-        {name: newName, age:30},
-        {name:"Raymond", age:40}
-      ]      
+      persons:_persons    
     })
   }
 
@@ -71,7 +80,8 @@ class App extends Component {
                 name={person.name}
                 age={person.age} 
                 click={() => this.deletePersonHandler(index)} 
-                key={person.id}/>
+                key={person.id}
+                changed={(event) => this.nameChangedHandler(event, person.id)}/>
             );
           })}
         </div> 

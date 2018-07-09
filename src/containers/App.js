@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Person/Person';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
   state = {
@@ -76,19 +76,11 @@ class App extends Component {
     if(this.state.showPersons) {
       persons = (
         <div>
-          {this.state.persons.map((person, index) => {
-            return (
-              <ErrorBoundary key={person.id}> 
-                <Person
-                  name={person.name}
-                  age={person.age} 
-                  click={() => this.deletePersonHandler(index)} 
-                  
-                  changed={(event) => this.nameChangedHandler(event, person.id)}/>
-                </ErrorBoundary>
-            );
-          })}
-        </div> 
+          <Persons 
+            persons={this.state.persons}
+            clicked={this.deletePersonHandler}
+            changed={this.nameChangedHandler} />
+        </div>  
       );
       style.backgroundColor = 'red';
     }
@@ -101,11 +93,10 @@ class App extends Component {
     }
     return (
         <div className="App">
-          <h1>Hi, I'm a react app!</h1>
-          <p className={classes.join(' ')}>This is really working!</p>
-          <button
-            style={style} 
-            onClick={this.togglePersonsHandler}>Show People</button>
+            <Cockpit
+              showPersons={this.state.showPersons}
+              persons={this.state.persons}
+              btnClicked={this.togglePersonsHandler} />
           {persons}
         </div>
     );

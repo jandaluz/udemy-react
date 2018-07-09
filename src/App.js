@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Radium, {StyleRoot} from 'radium';
 import './App.css';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -69,11 +69,7 @@ class App extends Component {
       color: 'white',
       font: 'inherit',
       border: '1px solid blue',
-      padding: '8px',
-      ':hover': {
-        backgroundColor:'lightgreen',
-        color:'black'
-      }
+      padding: '8px'
     };
 
     let persons = null;
@@ -82,21 +78,19 @@ class App extends Component {
         <div>
           {this.state.persons.map((person, index) => {
             return (
-              <Person
-                name={person.name}
-                age={person.age} 
-                click={() => this.deletePersonHandler(index)} 
-                key={person.id}
-                changed={(event) => this.nameChangedHandler(event, person.id)}/>
+              <ErrorBoundary key={person.id}> 
+                <Person
+                  name={person.name}
+                  age={person.age} 
+                  click={() => this.deletePersonHandler(index)} 
+                  
+                  changed={(event) => this.nameChangedHandler(event, person.id)}/>
+                </ErrorBoundary>
             );
           })}
         </div> 
       );
       style.backgroundColor = 'red';
-      style[':hover'] = {
-        backgroundColor: 'salmon',
-        color:'black'
-      }
     }
     let classes = [];
     if(this.state.persons.length <= 2) {
@@ -106,7 +100,6 @@ class App extends Component {
       classes.push('bold');
     }
     return (
-      <StyleRoot>
         <div className="App">
           <h1>Hi, I'm a react app!</h1>
           <p className={classes.join(' ')}>This is really working!</p>
@@ -115,9 +108,8 @@ class App extends Component {
             onClick={this.togglePersonsHandler}>Show People</button>
           {persons}
         </div>
-      </StyleRoot>
     );
   }
 }
 
-export default Radium(App); //Radium is a "higher order component"
+export default App; //Radium is a "higher order component"

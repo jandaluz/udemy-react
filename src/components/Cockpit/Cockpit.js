@@ -2,7 +2,6 @@ import React from 'react';
 import './Cockpit.css';
 
 const cockpit = (props) => {
-
     let classes = [];
     let btnStyle = {};
     if(props.showPersons) {
@@ -19,6 +18,7 @@ const cockpit = (props) => {
     return (
         <div >
             <h1>Hi, I'm a react app!</h1>
+            <h3>{props.appTitle}</h3>
             <p className={classes.join(' ')}>This is really working!</p>
             <button
             style={btnStyle}

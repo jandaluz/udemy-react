@@ -4,6 +4,28 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    console.log('[App.js] Inside Constructor');
+    this.state = {
+      persons:[
+        {id: '12ljkf', name: "Jay", age:28},
+        {id: '2a23l1', name:"Joe", age:30},
+        {id: '3flink', name:"Ray", age:40}
+      ],
+      showPersons:false
+    }    
+  }
+
+  componentWillMount() {
+    console.log('[App.js] Inside componentWillMount()');
+  }
+
+  componentDidMount() {
+    console.log('[App.js] Inside componentDidMount()');
+  }
+  /**
   state = {
     persons:[
       {id: '12ljkf', name: "Jay", age:28},
@@ -12,7 +34,7 @@ class App extends Component {
     ],
     showPersons:false
   }
-
+**/
   /** DEPRECATED
   switchNameHandler = (newName) => {
     console.log('Was clicked');
@@ -63,7 +85,7 @@ class App extends Component {
     });
   }
   render() {
-
+    console.log('[App.js] Inside render()');
     const style = {
       backgroundColor: 'green',
       color: 'white',
@@ -94,6 +116,7 @@ class App extends Component {
     return (
         <div className="App">
             <Cockpit
+              appTitle={this.props.title}
               showPersons={this.state.showPersons}
               persons={this.state.persons}
               btnClicked={this.togglePersonsHandler} />

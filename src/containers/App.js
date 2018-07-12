@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import Aux from '../hoc/Auxiliary';
@@ -101,13 +101,6 @@ class App extends Component {
   }
   render() {
     console.log('[App.js] Inside render()');
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px'
-    };
 
     let persons = null;
     if (this.state.showPersons) {
@@ -119,17 +112,16 @@ class App extends Component {
             changed={this.nameChangedHandler} />
         </div>
       );
-      style.backgroundColor = 'red';
     }
-    let classes = [];
+    let assignedClasses = [];
     if (this.state.persons.length <= 2) {
-      classes.push('red');
+      assignedClasses.push(classes.red);
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold');
+      assignedClasses.push(classes.bold);
     }
     return (
-      <div className="App">
+      <div className={classes.App}>
         <button onClick={() => { this.setState({showPersons:true});} }>Show People</button>
         <Cockpit
           appTitle={this.props.title}
@@ -142,4 +134,4 @@ class App extends Component {
   }
 }
 
-export default App; //Radium is a "higher order component"
+export default App;

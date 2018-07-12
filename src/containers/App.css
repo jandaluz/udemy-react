@@ -34,3 +34,7 @@
 .bold {
   font-weight: bold
 }
+
+.App button:hover {
+  cursor: pointer;
+}

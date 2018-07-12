@@ -1,29 +1,28 @@
 import React from 'react';
 import Aux from '../../hoc/Auxiliary';
-import './Cockpit.css';
+import classes from './Cockpit.css';
 
 const cockpit = (props) => {
-    let classes = [];
-    let btnStyle = {};
+    let assignedClasses = [];
+    let btnClass = '';
     if(props.showPersons) {
-        btnStyle = {
-            backgroundColor:'red'
-        };
+        btnClass = classes.Red;
+        console.log(classes);
     }
     if(props.persons.length <= 2) {
-      classes.push('red');
+        assignedClasses.push('red');
     } 
     if(props.persons.length <= 1) {
-      classes.push('bold');
+        assignedClasses.push('bold');
     }    
     return (
-        <Aux>
+        <div className={classes.Cockpit}>
             <h1>{props.appTitle}</h1>
-            <p className={classes.join(' ')}>This is really working!</p>
+            <p className={assignedClasses.join(' ')}>This is really working!</p>
             <button
-            style={btnStyle}
-            onClick={props.btnClicked}>Toggle People</button>
-        </Aux>
+                className={btnClass}
+                onClick={props.btnClicked}>Toggle People</button>
+        </div>
     )
 }
 

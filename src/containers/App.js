@@ -9,13 +9,13 @@ class App extends Component {
     super(props);
     console.log('[App.js] Inside Constructor');
     this.state = {
-      persons:[
-        {id: '12ljkf', name: "Jay", age:28},
-        {id: '2a23l1', name:"Joe", age:30},
-        {id: '3flink', name:"Ray", age:40}
+      persons: [
+        { id: '12ljkf', name: "Jay", age: 28 },
+        { id: '2a23l1', name: "Joe", age: 30 },
+        { id: '3flink', name: "Ray", age: 40 }
       ],
-      showPersons:false
-    }    
+      showPersons: false
+    }
   }
 
   componentWillMount() {
@@ -24,6 +24,19 @@ class App extends Component {
 
   componentDidMount() {
     console.log('[App.js] Inside componentDidMount()');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[UPDATE App.js] Inside shouldComponentUpdate()');
+    return nextState.persons !== this.state.persons ||
+      nextState.showPersons !== this.state.showPersons;
+  }
+  componentWillUpdate(nextProps, nextState) {
+    console.log('[UPDATE App.js] Inside componentWillUpdate()');
+    console.log(nextProps);
+  }
+  componentDidUpdate() {
+    console.log('[UPDATE App.js] Inside componentDidUpdate()');
   }
   /**
   state = {
@@ -52,19 +65,19 @@ class App extends Component {
     console.log('delete: ' + personIndex);
     const persons = [...this.state.persons] //copy values to new var using spread
     persons.splice(personIndex, 1);
-    this.setState({persons:persons});
+    this.setState({ persons: persons });
   }
 
   nameChangedHandler = (event, id) => {
     console.log('changed');
     const newName = event.target.value;
 
-    const personIndex = this.state.persons.findIndex( p => {
+    const personIndex = this.state.persons.findIndex(p => {
       return p.id === id;
     });
     const _person = {
       ...this.state.persons[personIndex],
-      name:newName
+      name: newName
     };
 
     const _persons = [
@@ -72,16 +85,16 @@ class App extends Component {
     ]
     _persons[personIndex] = _person;
 
-    this.setState( {
-      persons:_persons    
+    this.setState({
+      persons: _persons
     })
   }
 
   togglePersonsHandler = (event) => {
     console.log('toggle persons');
     let show = this.state.showPersons;
-    this.setState( {
-      showPersons : !show
+    this.setState({
+      showPersons: !show
     });
   }
   render() {
@@ -95,33 +108,34 @@ class App extends Component {
     };
 
     let persons = null;
-    if(this.state.showPersons) {
+    if (this.state.showPersons) {
       persons = (
         <div>
-          <Persons 
+          <Persons
             persons={this.state.persons}
             clicked={this.deletePersonHandler}
             changed={this.nameChangedHandler} />
-        </div>  
+        </div>
       );
       style.backgroundColor = 'red';
     }
     let classes = [];
-    if(this.state.persons.length <= 2) {
+    if (this.state.persons.length <= 2) {
       classes.push('red');
     }
-    if(this.state.persons.length <= 1) {
+    if (this.state.persons.length <= 1) {
       classes.push('bold');
     }
     return (
-        <div className="App">
-            <Cockpit
-              appTitle={this.props.title}
-              showPersons={this.state.showPersons}
-              persons={this.state.persons}
-              btnClicked={this.togglePersonsHandler} />
-          {persons}
-        </div>
+      <div className="App">
+        <button onClick={() => { this.setState({showPersons:true});} }>Show People</button>
+        <Cockpit
+          appTitle={this.props.title}
+          showPersons={this.state.showPersons}
+          persons={this.state.persons}
+          btnClicked={this.togglePersonsHandler} />
+        {persons}
+      </div>
     );
   }
 }

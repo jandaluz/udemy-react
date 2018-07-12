@@ -22,7 +22,7 @@ const cockpit = (props) => {
             <p className={classes.join(' ')}>This is really working!</p>
             <button
             style={btnStyle}
-            onClick={props.btnClicked}>Show People</button>
+            onClick={props.btnClicked}>Toggle People</button>
         </div>
     )
 }

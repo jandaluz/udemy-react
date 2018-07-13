@@ -16,7 +16,8 @@ class App extends Component {
         { id: '2a23l1', name: "Joe", age: 30 },
         { id: '3flink', name: "Ray", age: 40 }
       ],
-      showPersons: false
+      showPersons: false,
+      toggleClicked: 0
     }
   }
 
@@ -95,8 +96,11 @@ class App extends Component {
   togglePersonsHandler = (event) => {
     console.log('toggle persons');
     let show = this.state.showPersons;
-    this.setState({
-      showPersons: !show
+    this.setState((prevState, props) => {
+      return {
+        showPersons: !show,
+        toggleClicked: prevState.toggleClicked + 1
+      }
     });
   }
   render() {
@@ -121,7 +125,7 @@ class App extends Component {
       assignedClasses.push(classes.bold);
     }
     return (
-      <div className={classes.App}>
+      <Aux>
         <button onClick={() => { this.setState({showPersons:true});} }>Show People</button>
         <Cockpit
           appTitle={this.props.title}
@@ -129,9 +133,9 @@ class App extends Component {
           persons={this.state.persons}
           btnClicked={this.togglePersonsHandler} />
         {persons}
-      </div>
+      </Aux>
     );
   }
 }
 
-export default App;
+export default withClass(App, classes.App);

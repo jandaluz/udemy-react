@@ -30,6 +30,7 @@ class Persons extends PureComponent {
         return this.props.persons.map((person, index) => {
             return <ErrorBoundary key={person.id}>
                 <Person
+                    position={index}
                     name={person.name}
                     age={person.age}
                     click={() => this.props.clicked(index)}

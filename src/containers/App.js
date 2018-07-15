@@ -5,6 +5,7 @@ import Cockpit from '../components/Cockpit/Cockpit';
 import Aux from '../hoc/Auxiliary';
 import withClass from '../hoc/withClass';
 
+export const AuthContext = React.createContext(false);
 class App extends Component {
 
   constructor(props) {
@@ -17,7 +18,8 @@ class App extends Component {
         { id: '3flink', name: "Ray", age: 40 }
       ],
       showPersons: false,
-      toggleClicked: 0
+      toggleClicked: 0,
+      authenticated: false
     }
   }
 
@@ -32,7 +34,8 @@ class App extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     console.log('[UPDATE App.js] Inside shouldComponentUpdate()');
     return nextState.persons !== this.state.persons ||
-      nextState.showPersons !== this.state.showPersons;
+      nextState.showPersons !== this.state.showPersons ||
+      nextState.authenticated !== this.state.authenticated;
   }
   componentWillUpdate(nextProps, nextState) {
     console.log('[UPDATE App.js] Inside componentWillUpdate()');
@@ -103,6 +106,13 @@ class App extends Component {
       }
     });
   }
+
+  loginHandler = (event) => {
+    console.log('login click');
+    this.setState({
+      authenticated:true
+    });
+  }
   render() {
     console.log('[App.js] Inside render()');
 
@@ -113,7 +123,8 @@ class App extends Component {
           <Persons
             persons={this.state.persons}
             clicked={this.deletePersonHandler}
-            changed={this.nameChangedHandler} />
+            changed={this.nameChangedHandler} 
+            isAuthenticated={this.state.authenticated}/>
         </div>
       );
     }
@@ -131,8 +142,11 @@ class App extends Component {
           appTitle={this.props.title}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
+          login={this.loginHandler}
           btnClicked={this.togglePersonsHandler} />
-        {persons}
+          <AuthContext.Provider value={this.state.authenticated}>
+            {persons}
+          </AuthContext.Provider>
       </Aux>
     );
   }

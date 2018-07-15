@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import Person from './Person/Person';
-
 class Persons extends PureComponent {
 
     constructor(props) {
@@ -34,6 +33,7 @@ class Persons extends PureComponent {
                     name={person.name}
                     age={person.age}
                     click={() => this.props.clicked(index)}
+                    authenticated={this.props.isAuthenticated}
                     changed={(event) => this.props.changed(event, person.id)} />
             </ErrorBoundary>
         });
